@@ -40,16 +40,15 @@ $user_name = ''; // укажите здесь ваше имя
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <!--список из массива категорий-->
-            <?php $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'] ?>
-            <?php
+            <?php $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
                 $index = 0;
                 $countCategories = count($categories);
                 while ($index < $countCategories): ?>
                     <li class="promo__item promo__item--boards">
                         <a class="promo__link" href="pages/all-lots.html"><?php echo $categories[$index]; ?></a>
                     </li>
-        <?php $index++; ?>
-        <?php endwhile; ?>
+                <?php $index++; ?>
+            <?php endwhile; ?>
 
         </ul>
     </section>
@@ -94,7 +93,7 @@ $user_name = ''; // укажите здесь ваше имя
         ]?>
         <ul class="lots__list">
             <!--список из массива с товарами-->
-            <?php foreach ($advertisements as $key => $val): ?>
+            <?php foreach ($advertisements as $val): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?php echo $val['imgUrl']?>" width="350" height="260" alt="">
