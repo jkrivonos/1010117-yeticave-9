@@ -1,10 +1,3 @@
-<?php
-$is_auth = rand(0, 1);
-$user_name = 'Юлия';
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -57,12 +50,12 @@ $user_name = 'Юлия';
     <nav class="nav">
         <ul class="nav__list container">
             <?php
-            $index = 0;
-            $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
             $countCategories = count($categories);
             while ($index < $countCategories): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?php echo $categories[$index];?></a>
+                    <a href="pages/all-lots.html">
+                        <?php echo $categories[$index];?>
+                    </a>
                     <?php $index++; ?>
                     <?php endwhile; ?>
                 </li>

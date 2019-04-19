@@ -1,6 +1,11 @@
 <?php
 
 require 'helpers.php';
+require 'functions.php';
+
+$is_auth = rand(0, 1);
+$user_name = 'Юлия';
+$index = 0;
 
 $advertisements = [
     [
@@ -41,10 +46,29 @@ $advertisements = [
     ]
 ];
 
-$content = include_template('index.php', ['advertisements' => $advertisements]);
+$categories = [
+    'Доски и лыжи',
+    'Крепления',
+    'Ботинки',
+    'Одежда',
+    'Инструменты',
+    'Разное'
+];
 
+$content = include_template('index.php', [
+    'advertisements' => $advertisements,
+    'categories' => $categories,
+    'index' => $index
+]);
 
-$layout = include_template('layout.php', ['content' => $content, 'title' => 'Главная']);
+$layout = include_template('layout.php', [
+    'content' => $content,
+    'categories' => $categories,
+    'title' => 'Главная',
+    'user_name' => $user_name,
+    'is_auth' => $is_auth,
+    'index' => $index
+]);
 
 print($layout);
 ?>

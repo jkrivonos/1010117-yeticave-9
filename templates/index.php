@@ -1,10 +1,10 @@
+
 <section class="promo">
     <h2 class="promo__title">Нужен стафф для катки?</h2>
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
     <ul class="promo__list">
         <!--заполните этот список из массива категорий-->
-        <?php $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
-                $index = 0;
+        <?php
                 $countCategories = count($categories);
                 while ($index < $countCategories): ?>
                     <li class="promo__item promo__item--boards">
@@ -22,16 +22,7 @@
     <ul class="lots__list">
         <!--список из массива с товарами-->
         <?php
-        function formatPrice($temp){
-            $formatedPrice = "";
-            $tempPrice = ceil($temp);
-            if ($tempPrice < 1000){
-                $formatedPrice = $tempPrice." "."Р";
-            }else{
-                $formatedPrice = number_format($tempPrice, 0, '.',' ') ." "."Р";
-            }
-            return $formatedPrice;
-        }
+        echo $formatPrice
         ?>
         <?php foreach ($advertisements as $val): ?>
             <li class="lots__item lot">
