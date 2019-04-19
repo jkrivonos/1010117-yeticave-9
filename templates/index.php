@@ -3,9 +3,15 @@
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
     <ul class="promo__list">
         <!--заполните этот список из массива категорий-->
-        <li class="promo__item promo__item--boards">
-            <a class="promo__link" href="pages/all-lots.html">Имя категории</a>
-        </li>
+        <?php $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
+                $index = 0;
+                $countCategories = count($categories);
+                while ($index < $countCategories): ?>
+                    <li class="promo__item promo__item--boards">
+                        <a class="promo__link" href="pages/all-lots.html"><?php echo $categories[$index]; ?></a>
+                    </li>
+                <?php $index++; ?>
+            <?php endwhile; ?>
     </ul>
 </section>
 

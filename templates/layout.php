@@ -56,10 +56,16 @@ $title = "Главная";
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <!--заполните этот список из массива категорий-->
-            <li class="nav__item">
-                <a href="pages/all-lots.html">Название категории</a>
-            </li>
+            <?php
+            $index = 0;
+            $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
+            $countCategories = count($categories);
+            while ($index < $countCategories): ?>
+                <li class="nav__item">
+                    <a href="pages/all-lots.html"><?php echo $categories[$index];?></a>
+                    <?php $index++; ?>
+                    <?php endwhile; ?>
+                </li>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
