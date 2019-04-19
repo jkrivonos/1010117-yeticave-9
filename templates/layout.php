@@ -1,7 +1,7 @@
 <?php
 $is_auth = rand(0, 1);
 $user_name = 'Юлия';
-$title = "Главная";
+
 ?>
 
 
@@ -9,7 +9,7 @@ $title = "Главная";
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $title ?></title>
+    <title><?php echo htmlspecialchars($title)?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>

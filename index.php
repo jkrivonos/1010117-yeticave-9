@@ -44,7 +44,7 @@ $advertisements = [
 $content = include_template('index.php', ['advertisements' => $advertisements]);
 
 
-$layout = include_template('layout.php', ['content' => $content]);
+$layout = include_template('layout.php', ['content' => $content, 'title' => 'Главная']);
 
 print($layout);
 ?>
