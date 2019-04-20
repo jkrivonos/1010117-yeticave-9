@@ -131,7 +131,13 @@ $user_name = 'Юлия';
                                     <span class="lot__cost"><?php echo formatPrice($val['price']); ?></span>
                                 </div>
                                 <div class="lot__timer timer">
-                                    12:23
+                                    <?php
+                                        $date1 = new DateTime("now");
+                                        $date2 = new DateTime("tomorrow midnight");
+                                        $interval = $date1->diff($date2);
+
+                                        echo $interval->format("%h : %i");
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +145,6 @@ $user_name = 'Юлия';
                 <?php endforeach; ?>
             </ul>
         </section>
-
     </main>
 </div>
 
