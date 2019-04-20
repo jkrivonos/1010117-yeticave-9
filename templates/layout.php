@@ -50,6 +50,7 @@
     <nav class="nav">
         <ul class="nav__list container">
             <?php
+            $index = 0;
             $countCategories = count($categories);
             while ($index < $countCategories): ?>
                 <li class="nav__item">

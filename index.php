@@ -5,7 +5,7 @@ require 'functions.php';
 
 $is_auth = rand(0, 1);
 $user_name = 'Юлия';
-$index = 0;
+
 
 $advertisements = [
     [
@@ -57,8 +57,7 @@ $categories = [
 
 $content = include_template('index.php', [
     'advertisements' => $advertisements,
-    'categories' => $categories,
-    'index' => $index
+    'categories' => $categories
 ]);
 
 $layout = include_template('layout.php', [
@@ -66,8 +65,7 @@ $layout = include_template('layout.php', [
     'categories' => $categories,
     'title' => 'Главная',
     'user_name' => $user_name,
-    'is_auth' => $is_auth,
-    'index' => $index
+    'is_auth' => $is_auth
 ]);
 
 print($layout);

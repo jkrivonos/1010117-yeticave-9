@@ -5,7 +5,8 @@
     <ul class="promo__list">
         <!--заполните этот список из массива категорий-->
         <?php
-                $countCategories = count($categories);
+            $index = 0;
+            $countCategories = count($categories);
                 while ($index < $countCategories): ?>
                     <li class="promo__item promo__item--boards">
                         <a class="promo__link" href="pages/all-lots.html"><?php echo $categories[$index]; ?></a>
