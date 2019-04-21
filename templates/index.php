@@ -23,7 +23,7 @@
     <ul class="lots__list">
         <!--список из массива с товарами-->
         <?php
-        echo $formatPrice
+            echo $formatPrice
         ?>
         <?php foreach ($advertisements as $val): ?>
             <li class="lots__item lot">
@@ -41,8 +41,11 @@
 
                             <span class="lot__cost"><?php echo formatPrice($val['price']); ?></span>
                         </div>
-                        <div class="lot__timer timer">
-                            12:23
+                        <div>
+                            <?php
+                            echo formatTime();
+
+                            ?>
                         </div>
                     </div>
                 </div>
