@@ -130,15 +130,16 @@ $user_name = 'Юлия';
 
                                     <span class="lot__cost"><?php echo formatPrice($val['price']); ?></span>
                                 </div>
-                                <div class="lot__timer timer">
                                     <?php
-                                        $date1 = new DateTime("now");
-                                        $date2 = new DateTime("tomorrow midnight");
-                                        $interval = $date1->diff($date2);
-
-                                        echo $interval->format("%h : %i");
+                                    $nowTime = new DateTime("now");
+                                    $midnightTime = new DateTime("tomorrow midnight");
+                                    $interval = $nowTime->diff($midnightTime);
+                                    if ($interval->format('%h') < 1) {
+                                        echo "<div class='timer--finishing'>".$interval->format('%h : %i')."</div>";
+                                    }else{
+                                        echo "<div class='lot__timer timer'>".$interval->format('%h : %i')."</div>";
+                                    }
                                     ?>
-                                </div>
                             </div>
                         </div>
                     </li>
