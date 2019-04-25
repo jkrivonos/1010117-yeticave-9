@@ -46,14 +46,10 @@ CREATE TABLE user(
   contact CHAR(100)
 )
 
-CREATE INDEX category_name ON category(name);
+
 CREATE INDEX lot_description ON lot(description);
 CREATE INDEX user_name ON user(name);
 CREATE INDEX user_contacts ON user(contact);
 
 CREATE UNIQUE INDEX user_email ON user(email);
-CREATE UNIQUE INDEX id_category ON category(id);
-CREATE UNIQUE INDEX id_lot ON lot(id);
-CREATE UNIQUE INDEX id_bet ON bet(id);
-CREATE UNIQUE INDEX id_user ON user(id);
 
