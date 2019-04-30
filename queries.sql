@@ -29,8 +29,20 @@ INSERT INTO bet SET user_id = 2, lot_id = 7, creation_time = NOW(), price = 3600
 SELECT name FROM category;
 
 -- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;
--- Вот здесь у меня сложности.. не знаю как посчитать сумму итоговую.. как я понимаю, надо сложить lot.start_price и bet.price и вывести как total_price. Таблички сджойнила.. как дальше не знаю
-SELECT lot.description, lot.start_price, lot.creation_date, lot.img_link, category.name, bet.price, total_price, SUM(lot.start_price + bet.price) AS total_price FROM lot INNER JOIN category ON lot.category_id = category.id INNER JOIN bet ON lot.id = bet.lot_id WHERE lot.winner_user_id IS NULL AND lot.expiration_date > NOW()  ORDER BY lot.creation_date DESC;
+SELECT
+  lot.description,
+  lot.start_price,
+  lot.creation_date,
+  lot.img_link,
+  lot.expiration_date,
+  category.name,
+  MAX(bet.price) as max_price
+  FROM
+  lot INNER JOIN category ON lot.category_id = category.id
+  INNER JOIN bet ON lot.id = bet.lot_id GROUP BY lot.id
+  ORDER BY lot.creation_date DESC;
+--   WHERE lot.expiration_date > NOW() AND lot.winner_user_id IS NULL;
+--   WHERE lot.winner_user_id IS NULL AND lot.expiration_date > CURRENT_TIMESTAMP;
 
 -- показать лот по его id. Получите также название категории, к которой принадлежит лот;
 SELECT lot.description, category.name FROM lot INNER JOIN category ON lot.category_id = category.id WHERE lot.id = 2
@@ -38,4 +50,5 @@ SELECT lot.description, category.name FROM lot INNER JOIN category ON lot.catego
 UPDATE lot SET description = 'yellow duck' WHERE id = 7;
 
 -- получить список самых свежих ставок для лота по его идентификатору.
-SELECT bet.price FROM lot INNER JOIN bet ON bet.lot_id = lot.id WHERE lot.id = 7 ORDER BY lot.creation_date DESC;
+SELECT bet.price, bet.creation_time FROM lot INNER JOIN bet ON bet.lot_id = lot.id WHERE lot.id = 2 ORDER BY bet.creation_time DESC;
+
