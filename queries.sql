@@ -36,13 +36,11 @@ SELECT
   lot.img_link,
   lot.expiration_date,
   category.name,
-  MAX(bet.price) as max_price
+  IFNULL( MAX(bet.price), lot.start_price) as max_price
   FROM
   lot INNER JOIN category ON lot.category_id = category.id
-  INNER JOIN bet ON lot.id = bet.lot_id GROUP BY lot.id
+  LEFT JOIN bet ON lot.id = bet.lot_id WHERE lot.expiration_date > NOW() GROUP BY lot.id
   ORDER BY lot.creation_date DESC;
---   WHERE lot.expiration_date > NOW() AND lot.winner_user_id IS NULL;
---   WHERE lot.winner_user_id IS NULL AND lot.expiration_date > CURRENT_TIMESTAMP;
 
 -- показать лот по его id. Получите также название категории, к которой принадлежит лот;
 SELECT lot.description, category.name FROM lot INNER JOIN category ON lot.category_id = category.id WHERE lot.id = 2
