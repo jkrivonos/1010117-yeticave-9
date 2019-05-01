@@ -48,5 +48,10 @@ SELECT lot.description, category.name FROM lot INNER JOIN category ON lot.catego
 UPDATE lot SET description = 'yellow duck' WHERE id = 7;
 
 -- получить список самых свежих ставок для лота по его идентификатору.
-SELECT bet.price, bet.creation_time FROM lot INNER JOIN bet ON bet.lot_id = lot.id WHERE lot.id = 2 ORDER BY bet.creation_time DESC;
+
+SELECT bet.price,
+bet.creation_time
+FROM bet
+WHERE lot_id = 2
+ORDER BY bet.creation_time DESC;
 
