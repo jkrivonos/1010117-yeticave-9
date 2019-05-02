@@ -1,30 +1,41 @@
 <?php
 $con = mysqli_connect("localhost", "root", "", "yeticave");
+mysqli_set_charset($con, "utf8");
 
 if ($con == false){
     print("Ошибка подключения: " . mysqli_connect_error());
+    die();
 }else{
     $sql = "SELECT name, code FROM category";
     $result = mysqli_query($con, $sql);
+    if (!$result){
+        $error = mysqli_error($con);
+        print("ошибка MySQL:" . $error);
+    }
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
     $sqlLots = "SELECT
-  lot.description,
-  lot.start_price,
-  lot.creation_date,
-  lot.img_link,
-  lot.expiration_date,
-  category.name as category_name,
-  IFNULL( MAX(bet.price), lot.start_price) as max_price
-  FROM
-  lot INNER JOIN category ON lot.category_id = category.id
-  LEFT JOIN bet ON lot.id = bet.lot_id WHERE lot.expiration_date > NOW() GROUP BY lot.id
-  ORDER BY lot.creation_date DESC;
+        lot.description,
+        lot.start_price,
+        lot.creation_date,
+        lot.img_link,
+        lot.expiration_date,
+        category.name as category_name,
+        IFNULL( MAX(bet.price), lot.start_price) as max_price
+        FROM
+        lot INNER JOIN category ON lot.category_id = category.id
+        LEFT JOIN bet ON lot.id = bet.lot_id WHERE lot.expiration_date > NOW() GROUP BY lot.id
+        ORDER BY lot.creation_date DESC;
 ";
     $resultLots = mysqli_query($con, $sqlLots);
+    if (!$resultLots){
+        $error = mysqli_error($con);
+        print("ошибка MySQL:" . $error);
+    }
+
     $advertisements = mysqli_fetch_all($resultLots, MYSQLI_ASSOC);
 };
 
-mysqli_set_charset($con, "utf8");
 require 'helpers.php';
 require 'functions.php';
 
