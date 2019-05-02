@@ -5,12 +5,13 @@ mysqli_set_charset($con, "utf8");
 if ($con == false){
     print("Ошибка подключения: " . mysqli_connect_error());
     die();
-}else{
+}
     $sql = "SELECT name, code FROM category";
     $result = mysqli_query($con, $sql);
     if (!$result){
         $error = mysqli_error($con);
         print("ошибка MySQL:" . $error);
+        die();
     }
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -31,10 +32,10 @@ if ($con == false){
     if (!$resultLots){
         $error = mysqli_error($con);
         print("ошибка MySQL:" . $error);
+        die();
     }
 
     $advertisements = mysqli_fetch_all($resultLots, MYSQLI_ASSOC);
-};
 
 require 'helpers.php';
 require 'functions.php';
