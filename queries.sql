@@ -1,4 +1,6 @@
 INSERT INTO category (name) VALUES ('Доски и лыжи'),('Крепления'),('Ботинки'), ('Одежда'), ('Инструменты'),('Разное');
+INSERT INTO category SET name = 'Медикаменты'  , code = 'drugs'
+
 
 INSERT INTO user SET registration_date = NOW(), email='yulia@gmail.com',  name = 'Yulia', password = 'supersecret', avatar_link = 'img_link', contact = 'Краснодар';
 INSERT INTO user SET registration_date = NOW(), email='lera@gmail.com',  name = 'Lera', password = 'secret', avatar_link = 'img_link2', contact = 'Астрахань';
@@ -13,6 +15,9 @@ INSERT INTO lot SET description = 'Крепления Union Contact Pro 2015 г�
 INSERT INTO lot SET description = 'Ботинки для сноуборда DC Mutiny Charocal', start_price = 10999,  img_link = 'img/lot-4.jpg', category_id = 3, creation_date = NOW();
 INSERT INTO lot SET description = 'Куртка для сноуборда DC Mutiny Charocal', start_price = 7500,  img_link = 'img/lot-5.jpg', category_id = 4, creation_date = NOW();
 INSERT INTO lot SET description = 'Маска Oakley Canopy', start_price = 5400,  img_link = 'img/lot-6.jpg', category_id = 6, creation_date = NOW();
+
+INSERT INTO lot SET description = 'Здоровая еда', start_price = 100,  img_link = 'img/healty_food.jpg', category_id = 6, creation_date = NOW(), expiration_date = 20191230 ;
+
 
 ALTER TABLE lot ADD COLUMN expiration_date TIMESTAMP;
 UPDATE lot SET expiration_date = 20201230 WHERE description = '2014 Rossignol District Snowboard';
@@ -49,4 +54,12 @@ UPDATE lot SET description = 'yellow duck' WHERE id = 7;
 
 -- получить список самых свежих ставок для лота по его идентификатору.
 SELECT bet.price, bet.creation_time FROM lot INNER JOIN bet ON bet.lot_id = lot.id WHERE lot.id = 2 ORDER BY bet.creation_time DESC;
+
+UPDATE category SET code = 'boards' WHERE name = "Доски и лыжи";
+UPDATE category SET code = 'attachment' WHERE name = "Крепления";
+UPDATE category SET code = 'boots' WHERE name = "Ботинки";
+UPDATE category SET code = 'tools' WHERE name = "Инструменты";
+UPDATE category SET code = 'other' WHERE name = "Разное";
+UPDATE category SET code = 'clothing' WHERE name = "Одежда";
+
 

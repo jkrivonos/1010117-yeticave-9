@@ -4,15 +4,12 @@
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
     <ul class="promo__list">
         <!--заполните этот список из массива категорий-->
-        <?php
-            $index = 0;
-            $countCategories = count($categories);
-                while ($index < $countCategories): ?>
-                    <li class="promo__item promo__item--boards">
-                        <a class="promo__link" href="pages/all-lots.html"><?php echo $categories[$index]; ?></a>
+        <?php foreach ($categories as $cat): ?>
+                    <li class="promo__item promo__item--<?php echo $cat['code']; ?>">
+                        <a class="promo__link" href="pages/all-lots.html">
+                            <?php echo $cat['name']; ?></a>
                     </li>
-                <?php $index++; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
     </ul>
 </section>
 
@@ -28,18 +25,18 @@
         <?php foreach ($advertisements as $val): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?php echo $val['imgUrl']?>" width="350" height="260" alt="">
+                    <img src="<?php echo $val['img_link']?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?php echo $val['category']; ?></span>
+                    <span class="lot__category"><?php echo $val['category_name']; ?></span>
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html">
-                        <? echo htmlspecialchars($val['title']); ?></a></h3>
+                        <? echo htmlspecialchars($val['description']); ?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                                 <span class="lot__amount"></span>
                             <span class="lot__amount"></span>
 
-                            <span class="lot__cost"><?php echo formatPrice($val['price']); ?></span>
+                            <span class="lot__cost"><?php echo formatPrice($val['max_price']); ?></span>
                         </div>
                         <div>
                             <?php
