@@ -20,15 +20,20 @@
     <ul class="lots__list">
         <!--список из массива с товарами-->
         <?php
-            echo $formatPrice
+            echo $formatPrice;
+
         ?>
-        <?php foreach ($advertisements as $val): ?>
+<!--        --><?php //var_dump($advertisements);?>
+
+        <?php foreach ($advertisements as $val):  ?>
+            <a href = "lot.php?id=<?php echo $val['id'];?>"
+                <a href="echo.php?var=Hello+world!">
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?php echo $val['img_link']?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?php echo $val['category_name']; ?></span>
+                    <span class="lot__category"><?php echo $val['category_name']; echo $val['id']; ?></span>
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html">
                         <? echo htmlspecialchars($val['description']); ?></a></h3>
                     <div class="lot__state">
@@ -47,6 +52,7 @@
                     </div>
                 </div>
             </li>
+            </a>
         <?php endforeach; ?>
     </ul>
 </section>

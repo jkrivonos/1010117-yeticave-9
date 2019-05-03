@@ -16,6 +16,7 @@ if ($con == false){
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     $sqlLots = "SELECT
+        lot.id,
         lot.description,
         lot.start_price,
         lot.creation_date,
