@@ -27,6 +27,19 @@ UPDATE lot SET expiration_date = 20201217 WHERE description = 'Ботинки д
 UPDATE lot SET expiration_date = 20190427 WHERE description = 'Куртка для сноуборда DC Mutiny Charocal';
 UPDATE lot SET expiration_date = 20201212 WHERE description = 'yellow duck';
 
+
+
+ALTER TABLE lot ADD COLUMN title TEXT;
+UPDATE lot SET title = 'Доска сноубордическая зеленая' WHERE description = '2014 Rossignol District Snowboard';
+UPDATE lot SET title = 'Доска сноубордическая серая' WHERE description = 'DC Ply Mens 2016/2017 Snowboard';
+UPDATE lot SET title = 'Крепление' WHERE description = 'Крепления Union Contact Pro 2015 года размер L/XL';
+UPDATE lot SET title = 'Ботинки' WHERE description = 'Ботинки для сноуборда DC Mutiny Charocal';
+UPDATE lot SET title = 'Куртка' WHERE description = 'Куртка для сноуборда DC Mutiny Charocal';
+UPDATE lot SET title = 'Маска' WHERE description = 'yellow duck';
+UPDATE lot SET title = 'Арбуз' WHERE description = 'Здоровая еда';
+
+
+
 INSERT INTO bet SET user_id = 1, lot_id = 2, creation_time = NOW(), price = 50000;
 INSERT INTO bet SET user_id = 2, lot_id = 2, creation_time = NOW(), price = 70000;
 INSERT INTO bet SET user_id = 2, lot_id = 7, creation_time = NOW(), price = 36000;

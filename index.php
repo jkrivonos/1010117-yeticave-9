@@ -17,6 +17,7 @@ if ($con == false){
 
     $sqlLots = "SELECT
         lot.id,
+        lot.title,
         lot.description,
         lot.start_price,
         lot.creation_date,

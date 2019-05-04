@@ -23,19 +23,16 @@
             echo $formatPrice;
 
         ?>
-<!--        --><?php //var_dump($advertisements);?>
-
         <?php foreach ($advertisements as $val):  ?>
-            <a href = "lot.php?id=<?php echo $val['id'];?>"
-                <a href="echo.php?var=Hello+world!">
+            <a href = "lot.php?id=<?php echo $val['id'];?> ">
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?php echo $val['img_link']?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?php echo $val['category_name']; echo $val['id']; ?></span>
+                    <span class="lot__category"><?php echo $val['category_name'];?></span>
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html">
-                        <? echo htmlspecialchars($val['description']); ?></a></h3>
+                        <? echo htmlspecialchars($val['title']); ?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                                 <span class="lot__amount"></span>

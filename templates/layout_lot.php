@@ -56,45 +56,24 @@
                 </li>
             </ul>
         </nav>
+
         <?php
-        require 'functions.php';
 
-        if (!isset($_GET['id'])){
-             print("ОШИБКА 404");
+        if (count($current_lot) == 0 || !isset($_GET['id'])){
+            $error404;
             die();
-        }
-
-        $con = mysqli_connect("localhost", "root", "", "yeticave");
-
-        if ($con == false){
-        print("Ошибка подключения: " . mysqli_connect_error());
-        die();
         };
-        $id_lot = intval($_GET['id']);
-        $sql = "SELECT lot.description, lot.img_link, category.name as category_name FROM lot INNER JOIN category ON lot.category_id = category.id WHERE lot.id = " . $id_lot;
-
-        $result = mysqli_query($con, $sql);
-
-        if (!$result){
-        $error = mysqli_error($con);
-        print("ошибка MySQL:" . $error);
-        die();
-        }
-        $current_lot = mysqli_fetch_assoc($result);
-        if ($current_lot == null){
-            print('ошибка 404');
-            die();
-        }
         ?>
+
         <section class="lot-item container">
-            <h2><?php echo $current_lot['description']?></h2>
+            <h2><?php echo htmlspecialchars($current_lot['title'])?></h2>
             <div class="lot-item__content">
                 <div class="lot-item__left">
                     <div class="lot-item__image">
-                        <img src="../<?php echo $current_lot['img_link']?>" width="730" height="548" alt="Сноуборд">
+                        <img src="../<?php echo htmlspecialchars($current_lot['img_link'])?>" width="730" height="548" alt="Сноуборд">
                     </div>
-                    <p class="lot-item__category">Категория: <span><?php echo $current_lot['category_name']?></span></p>
-                    <p class="lot-item__description"><?php echo $current_lot['description']?></p>
+                    <p class="lot-item__category">Категория: <span><?php echo htmlspecialchars($current_lot['category_name'])?></span></p>
+                    <p class="lot-item__description"><?php echo htmlspecialchars($current_lot['description'])?></p>
                 </div>
                 <div class="lot-item__right">
                     <div class="lot-item__state">
@@ -106,10 +85,10 @@
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">
                                 <span class="lot-item__amount">Текущая цена</span>
-                                <span class="lot-item__cost">10 999</span>
+                                <span class="lot-item__cost"><?php echo htmlspecialchars($current_lot['max_price'])?></span>
                             </div>
                             <div class="lot-item__min-cost">
-                                Мин. ставка <span>12 000 р</span>
+                                Мин. ставка <span><?php echo htmlspecialchars($current_lot['min_betprice']) ?></span>
                             </div>
                         </div>
                         <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
