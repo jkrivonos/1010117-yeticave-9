@@ -20,4 +20,5 @@
         }else{
             echo "<div class='lot__timer timer'>".$interval->format('%h : %i')."</div>";
         }
-    }?>
+    }
+    ?>
