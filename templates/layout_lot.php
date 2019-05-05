@@ -56,15 +56,6 @@
                 </li>
             </ul>
         </nav>
-
-        <?php
-
-        if (count($current_lot) == 0 || !isset($_GET['id'])){
-            $error404;
-            die();
-        };
-        ?>
-
         <section class="lot-item container">
             <h2><?php echo htmlspecialchars($current_lot['title'])?></h2>
             <div class="lot-item__content">
