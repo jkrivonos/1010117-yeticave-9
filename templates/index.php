@@ -1,4 +1,3 @@
-
 <section class="promo">
     <h2 class="promo__title">Нужен стафф для катки?</h2>
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
@@ -18,11 +17,6 @@
         <h2>Открытые лоты</h2>
     </div>
     <ul class="lots__list">
-        <!--список из массива с товарами-->
-        <?php
-            echo $formatedPrice;
-
-        ?>
         <?php foreach ($advertisements as $val):  ?>
             <a href = "lot.php?id=<?php echo $val['id'];?> ">
             <li class="lots__item lot">
@@ -43,7 +37,6 @@
                         <div>
                             <?php
                             echo formatTime();
-
                             ?>
                         </div>
                     </div>

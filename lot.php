@@ -3,6 +3,9 @@ require 'connection.php';
 require 'helpers.php';
 require 'functions.php';
 
+$is_auth = rand(0, 1);
+$user_name = 'Юлия';
+
 connectionToBD();
 
 if (!$con){
@@ -11,6 +14,17 @@ if (!$con){
     print("ошибка MySQL:" . $error);
     die();
 }
+
+
+$sql = "SELECT name, code FROM category";
+$result = mysqli_query($con, $sql);
+if (!$result){
+    $error = mysqli_error($con);
+    print("ошибка MySQL:" . $error);
+    die();
+}
+$categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 
 if (isset($_GET['id'])){
     $id_lot = intval($_GET['id']);
@@ -35,10 +49,18 @@ if (isset($_GET['id'])){
     $row_cnt = mysqli_num_rows($result);
     if($row_cnt > 0){
         $current_lot = mysqli_fetch_assoc($result);
-        $layout_lot = include_template('lot.php',[
-            'current_lot'=>$current_lot
+        $content = include_template('lot.php', [
+            'current_lot' => $current_lot
         ]);
-        print($layout_lot);
+        $layout= include_template('layout.php',[
+            'content' => $content,
+            'title' => 'Главная',
+            'user_name' => $user_name,
+            'is_auth' => $is_auth,
+            'categories' => $categories
+        ]);
+        print($layout);
+//        print($layout_lot);
     }else{
         $error = mysqli_error($con);
         http_response_code(404);
@@ -46,26 +68,6 @@ if (isset($_GET['id'])){
     }
 } else{
         http_response_code(404);
-}
-
-
-$is_auth = rand(0, 1);
-$user_name = 'Юлия';
-
-$content = include_template('lot.php', [
-    'categories' => $categories,
-    'current_lot' => $current_lot
-]);
-$layout = include_template('layout.php',[
-    'content' => $content,
-    'title' => 'Главная',
-    'user_name' => $user_name,
-    'is_auth' => $is_auth,
-    'categories' => $categories
-
-]);
-print($layout);
-
-?>
+} ?>
 
 

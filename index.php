@@ -56,5 +56,6 @@ $layout = include_template('layout.php', [
     'is_auth' => $is_auth
 ]);
 
+
 print($layout);
 ?>
