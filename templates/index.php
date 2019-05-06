@@ -20,7 +20,7 @@
     <ul class="lots__list">
         <!--список из массива с товарами-->
         <?php
-            echo $formatPrice;
+            echo $formatedPrice;
 
         ?>
         <?php foreach ($advertisements as $val):  ?>

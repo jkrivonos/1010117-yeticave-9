@@ -1,5 +1,5 @@
 <?php
-require_once 'connection.php';
+require 'connection.php';
 require 'helpers.php';
 require 'functions.php';
 
@@ -46,6 +46,26 @@ if (isset($_GET['id'])){
     }
 } else{
         http_response_code(404);
-}?>
+}
+
+
+$is_auth = rand(0, 1);
+$user_name = 'Юлия';
+
+$content = include_template('lot.php', [
+    'categories' => $categories,
+    'current_lot' => $current_lot
+]);
+$layout = include_template('layout.php',[
+    'content' => $content,
+    'title' => 'Главная',
+    'user_name' => $user_name,
+    'is_auth' => $is_auth,
+    'categories' => $categories
+
+]);
+print($layout);
+
+?>
 
 
