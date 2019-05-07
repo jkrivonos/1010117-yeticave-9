@@ -35,14 +35,7 @@
 
     <main>
         <nav class="nav">
-
-
-
             <ul class="nav__list container">
-
-
-
-
                 <li class="nav__item">
                     <a href="all-lots.html">Доски и лыжи</a>
                 </li>
@@ -64,7 +57,7 @@
             </ul>
         </nav>
 
-        <form class="form form--add-lot container form--invalid" action="add.php" method="post"> <!-- form--invalid -->
+        <form class="form form--add-lot container form--invalid" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
             <h2>Добавление лота</h2>
             <div class="form__container-two">
                 <div class="form__item form__item--invalid"> <!-- form__item--invalid -->
@@ -95,7 +88,7 @@
             <div class="form__item form__item--file">
                 <label>Изображение <sup>*</sup></label>
                 <div class="form__input-file">
-                    <input class="visually-hidden" type="file" id="lot-img" value="">
+                    <input class="visually-hidden" name="img_lot" type="file" id="lot-img" value="">
                     <label for="lot-img">
                         Добавить
                     </label>
@@ -119,7 +112,7 @@
                 </div>
             </div>
             <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
-            <button type="submit" class="button">Добавить лот</button>
+            <button type="submit" name="send" class="button">Добавить лот</button>
         </form>
     </main>
 
