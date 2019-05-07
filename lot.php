@@ -8,14 +8,6 @@ $user_name = 'Юлия';
 
 connectionToBD();
 
-if (!$con){
-    $error = mysqli_error();
-    header("Location: http://yeticave.ru/error.php/");
-    print("ошибка MySQL:" . $error);
-    die();
-}
-
-
 $sql = "SELECT name, code FROM category";
 $result = mysqli_query($con, $sql);
 if (!$result){
