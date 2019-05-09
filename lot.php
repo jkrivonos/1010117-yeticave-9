@@ -17,20 +17,26 @@ if (!$result){
 }
 $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
+//Минимальная ставка должна быть равна текущей цене плюс шаг торгов.
 if (isset($_GET['id'])){
     $id_lot = intval($_GET['id']);
-    $sql = "SELECT lot.description, 
-            lot.img_link, 
-            lot.title, 
-            category.name as category_name, 
-            IFNULL( MAX(bet.price), 
-            lot.start_price) as max_price, 
-            IFNULL( MIN(bet.price), 0) as min_betprice 
-            FROM lot INNER JOIN category ON lot.category_id = category.id  
-            LEFT JOIN bet ON lot.id = bet.lot_id  
-            WHERE lot.id = $id_lot 
-            GROUP BY lot.id";
+    $sql = "SELECT 
+              lot.description, 
+              lot.img_link, 
+              lot.title, 
+              category.name as category_name, 
+              IFNULL( MAX(bet.price), lot.start_price) as cur_price, 
+              IFNULL( MAX(bet.price) + lot.delta_bet, lot.start_price) as min_betprice 
+            FROM 
+              lot 
+            INNER JOIN category ON 
+              lot.category_id = category.id  
+            LEFT JOIN bet ON 
+              lot.id = bet.lot_id  
+            WHERE 
+              lot.id = $id_lot 
+            GROUP BY 
+              lot.id";
     $result = mysqli_query($con, $sql);
 
     if (!$result){
