@@ -1,11 +1,11 @@
 <?php
-$con = mysqli_connect("localhost", "root", "", "yeticave");
-mysqli_set_charset($con, "utf8");
 
-if ($con == false){
-    print("Ошибка подключения: " . mysqli_connect_error());
-    die();
-}
+require 'connection.php';
+require 'functions.php';
+require 'helpers.php';
+
+    connectionToBD();
+
     $sql = "SELECT name, code FROM category";
     $result = mysqli_query($con, $sql);
     if (!$result){
@@ -16,6 +16,8 @@ if ($con == false){
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     $sqlLots = "SELECT
+        lot.id,
+        lot.title,
         lot.description,
         lot.start_price,
         lot.creation_date,
@@ -37,8 +39,6 @@ if ($con == false){
 
     $advertisements = mysqli_fetch_all($resultLots, MYSQLI_ASSOC);
 
-require 'helpers.php';
-require 'functions.php';
 
 $is_auth = rand(0, 1);
 $user_name = 'Юлия';
@@ -55,6 +55,7 @@ $layout = include_template('layout.php', [
     'user_name' => $user_name,
     'is_auth' => $is_auth
 ]);
+
 
 print($layout);
 ?>
