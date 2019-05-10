@@ -11,7 +11,7 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
         die();
     }
     $categories_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//    var_dump($_POST);
+    var_dump($_POST);
     $required_fields = ['lot-name', 'category', 'message', 'lot-rate', 'lot-step', 'lot-date'];
     $errors = [];
 
@@ -24,15 +24,11 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
     $errors['lot-rate'] = 'Начальная цена должна быть больше 0';
     $errors['lot-step'] = 'Шаг ставки должен быть целым числом больше ноля';
     $errors['lot-date'] = 'Введите корректную дату завершения торгов';
+    $errors['category'] = 'Выберите категорию. Обязательно для заполнения';
 
     $checkedDate = $_POST['lot-date'];
 
     $isDateValid = isValidDate($checkedDate);
-
-//var_dump(isValidDate("2018-01-01")); // bool(true) var_dump(isValidDate("2018-1-1")); // bool(true) var_dump(isValidDate("2018-02-28")); // bool(true) var_dump(isValidDate("2018-02-30")); // bool(false)
-
-//    echo('00$dateResult'.$dateResult);
-
     if (count($errors)){
         echo('ошибка валидации');
         $layout = include_template('layout_add.php', [

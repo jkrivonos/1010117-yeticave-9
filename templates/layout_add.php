@@ -68,19 +68,24 @@
                     <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=$value;?>">
                     <span class="form__error"><?= $errors['lot-name']?></span>
                 </div>
-                <div class="form__item">
+
+                <?php
+                $classname = ($_POST['category'] == 'Выберите категорию') ? "form__item--invalid" : "";
+                $value = isset($_POST['category']) ? $_POST['category'] : ""; ?>
+                <div class="form__item <?=$classname?>">
                     <label for="category">Категория <sup>*</sup></label>
                     <select id="category" name="category">
+<!--                        TODO: непонятно, куда нужно вписать value="--><?//=$value;?><!--", чтобы select не сбрасывал значение выбранного селекта при перезагрузке страницы.-->
                         <option>Выберите категорию</option>
                         <?php foreach ($categories_list as $key => $item):?>
                             <option>
                                 <a class="promo__link" href="pages/all-lots.html">
-                                    <?php echo $item['name']; ?>
+                                    <?php echo $item['name'];?>
                                 </a>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <span class="form__error">Выберите категорию</span>
+                    <span class="form__error"><?= $errors['category']?></span>
                 </div>
             </div>
             <?php
