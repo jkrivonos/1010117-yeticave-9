@@ -16,8 +16,8 @@
 
         $interval = (new DateTime("now")) -> diff(new DateTime("tomorrow midnight"));
         if ($interval->format('%h') < 1) {
-            echo "<div class='timer--finishing timer'>".$interval->format('%h : %i');
+            echo "<div class='timer--finishing timer'>".$interval->format('%h : %i')."</div>";
         }else{
-            echo "<div class='lot__timer timer'>".$interval->format('%h : %i';
+            echo "<div class='lot__timer timer'>".$interval->format('%h : %i')."</div>";
         }
     }?>

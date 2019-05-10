@@ -32,7 +32,7 @@
                                 <span class="lot__amount"></span>
                             <span class="lot__amount"></span>
 
-                            <span class="lot__cost"><?php echo formatPrice($val['cur_price']); ?></span>
+                            <span class="lot__cost"><?php echo formatPrice($val['max_price']); ?></span>
                         </div>
                         <div>
                             <?php
