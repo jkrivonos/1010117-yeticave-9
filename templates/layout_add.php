@@ -56,13 +56,13 @@
                 </li>
             </ul>
         </nav>
-
-        <form class="form form--add-lot container form--invalid" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+        <?php $classname = count($errors) > 0 ? "form--invalid" : ""?>
+        <form class="form form--add-lot container <?=$classname?>" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
             <h2>Добавление лота</h2>
             <div class="form__container-two">
                 <?php
                 $classname = isset ($errors['lot-name']) ? "form__item--invalid" : "";
-                $value = isset($_POST['lot-name']) ? $_POST['lot-name'] : ""; ?>
+                $value = isset($formData['lot-name']) ? $formData['lot-name'] : ""; ?>
                 <div class="form__item <?=$classname?>"> <!-- form__item--invalid -->
                     <label for="lot-name">Наименование <sup>*</sup></label>
                     <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=$value;?>">
@@ -70,8 +70,8 @@
                 </div>
 
                 <?php
-                $classname = ($_POST['category'] == 'Выберите категорию') ? "form__item--invalid" : "";
-                $value = isset($_POST['category']) ? $_POST['category'] : ""; ?>
+                count($formData) == 0 ? ($classname = "") : ($classname = ($formData['category'] == 'Выберите категорию') ? "form__item--invalid" : "");
+                $value = isset($formData['category']) ? $formData['category'] : ""; ?>
                 <div class="form__item <?=$classname?>">
                     <label for="category">Категория <sup>*</sup></label>
                     <select id="category" name="category">
@@ -90,7 +90,7 @@
             </div>
             <?php
                 $classname = isset($errors['message']) ? "form__item--invalid" : "";
-                $value = isset($_POST['message']) ? $_POST['message'] : "";?>
+                $value = isset($formData['message']) ? $formData['message'] : "";?>
             <div class="form__item form__item--wide <?=$classname?>">
                 <label for="message">Описание <sup>*</sup></label>
                 <textarea
@@ -101,18 +101,23 @@
                 </textarea>
                 <span class="form__error"><?= $errors['message']?></span>
             </div>
-            <div class="form__item form__item--file">
+            <?php $classname = isset ($errors['file']) ? "form__item--invalid" : "";
+            $value = isset($formData['img_lot']) ? $formData['img_lot'] : '';?>
+            <div class="form__item form__item--file  <?=$classname?>">
                 <label>Изображение <sup>*</sup></label>
                 <div class="form__input-file">
-                    <input class="visually-hidden" name="img_lot" type="file" id="lot-img" value="">
+                    <input class="visually-hidden" name="img_lot" type="file" id="lot-img" value="<?=$value;?>">
                     <label for="lot-img">
                         Добавить
                     </label>
+                    <span class="form_error"><?=$errors['file']?></span>
                 </div>
             </div>
             <div class="form__container-three">
-                <?php $classname = isset ($errors['lot-rate']) && ($_POST['lot-rate']) == 0  ? "form__item--invalid" : "";
-                $value = isset($_POST['lot-rate']) ? $_POST['lot-rate'] : 0; ?>
+<!--                count($formData) == 0 ? ($classname = "") : ($classname = ($formData['category'] == 'Выберите категорию') ? "form__item--invalid" : "");-->
+
+                <?php count($formData) == 0 ? ($classname = "") :  ($classname = isset ($errors['lot-rate']) && ($formData['lot-rate']) == 0  ? "form__item--invalid" : "");
+                $value = isset($formData['lot-rate']) ? $formData['lot-rate'] : 0; ?>
                 <div class="form__item form__item--small <?=$classname?>">
                     <label for="lot-rate">Начальная цена <sup>*</sup></label>
                     <input id="lot-rate" type="text" name="lot-rate" placeholder="0" value="<?=$value;?>">
@@ -121,21 +126,20 @@
 <!--                --><?php
 //                    $classname =
 //                    isset ($errors['lot-step']) &&
-//                    ($_POST['lot-step']) == 0 ||
-//                    is_int($_POST['lot-step']) == false ? "form__item--invalid" : "";
-//                    $value = isset($_POST['lot-step']) ? $_POST['lot-step'] : 0;
+//                    ($formData['lot-step']) == 0 ||
+//                    is_int($formData['lot-step']) == false ? "form__item--invalid" : "";
+//                    $value = isset($formData['lot-step']) ? $formData['lot-step'] : 0;
 //                ?>
-<!--                TODO: проверка на целое число (is_int($_POST['lot-step']) == false) не работает..пишет,  что false. Надо разобраться.-->
-                <?php
-                $classname = isset ($errors['lot-step']) && ($_POST['lot-step']) == 0 ? "form__item--invalid" : "";
-                $value = isset($_POST['lot-step']) ? $_POST['lot-step'] : 0;?>
+<!--                TODO: проверка на целое число (is_int($formData['lot-step']) == false) не работает..пишет,  что false. Надо разобраться.-->
+                <?php count($formData) == 0 ? ($classname = "") :  ($classname = isset ($errors['lot-step']) && ($formData['lot-step']) == 0 ? "form__item--invalid" : "");
+                $value = isset($formData['lot-step']) ? $formData['lot-step'] : 0;?>
                 <div class="form__item form__item--small <?=$classname?>">
                     <label for="lot-step">Шаг ставки <sup>*</sup></label>
                     <input id="lot-step" type="text" name="lot-step" placeholder="0" value="<?=$value;?>">
                     <span class="form__error"><?= $errors['lot-step']?></span>
                 </div>
                 <?php $classname =  $isDateValid ? "" : "form__item--invalid";
-                $value = isset($_POST['lot-date']) ? $_POST['lot-date'] : '';?>
+                $value = isset($formData['lot-date']) ? $formData['lot-date'] : '';?>
                 <div class="form__item <?= $classname ?>">
                     <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
                     <input class="form__input-date" id="lot-date" type="text" name="lot-date" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?=$value;?>">
