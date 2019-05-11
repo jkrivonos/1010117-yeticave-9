@@ -42,9 +42,34 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
                 move_uploaded_file($tmp_name, 'uploads/'.$path);
                 $formData['path'] = $path;
 //                $lot = $_POST['lot'];
-//                var_dump($lot);
-                    $sql = 'INSERT INTO lot (creation_date, description, user_id, img_link, start_price, delta_bet, title) VALUES (NOW(), ? , 5, ?,?,?,?)';
-                    $stmt = db_get_prepare_stmt($con, $sql, [$formData['message'], $formData['path'], $formData['lot-rate'], $formData['lot-step'], $formData['lot-name']]);
+                var_dump($formData);
+                    $userIDRandom = '5';
+                $categoryNameDB = $formData['category'];
+                echo($categoryNameDB);
+                $sqlIDCategory = 'SELECT id FROM category WHERE name = "$categoryNameDB"';
+                $resultIDCategory = mysqli_query($con, $sqlIDCategory);
+                if (!$resultIDCategory){
+                    $error = mysqli_error($con);
+                    print("ошибка MySQL:" . $error);
+                    die();
+                }
+                else{
+//                    TODO: попытка вытащить id категории не очень удачная..
+                    var_dump($resultIDCategory);
+                    $idCategory = mysqli_fetch_assoc($resultIDCategory);
+                    var_dump($idCategory);
+
+                }
+
+                    $sql = 'INSERT INTO lot (description, title, creation_date, start_price, expiration_date, delta_bet, img_link, user_id) VALUES (?, ?, NOW(), ?, ?, ?, ?, 1)';
+                    $stmt = db_get_prepare_stmt($con, $sql, [
+                        $formData['message'],
+                        $formData['lot-name'],
+                        $formData['lot-rate'],
+                        $formData['lot-date'],
+                        $formData['lot-step'],
+                        $formData['path']
+                ]);
                     $result = mysqli_stmt_execute($stmt);
                     var_dump($result);
                     if ($result){
