@@ -96,26 +96,22 @@
                 <textarea
                         id="message"
                         name="message"
-                        placeholder="Напишите описание лота">
-                        <?=$value;?>
-                </textarea>
+                        placeholder="Напишите описание лота"><?=$value;?></textarea>
                 <span class="form__error"><?= $errors['message']?></span>
             </div>
             <?php $classname = isset ($errors['file']) ? "form__item--invalid" : "";
             $value = isset($formData['img_lot']) ? $formData['img_lot'] : '';?>
-            <div class="form__item form__item--file  <?=$classname?>">
+            <div class="form__item form__item--file <?=$classname?>">
                 <label>Изображение <sup>*</sup></label>
                 <div class="form__input-file">
                     <input class="visually-hidden" name="img_lot" type="file" id="lot-img" value="<?=$value;?>">
                     <label for="lot-img">
                         Добавить
                     </label>
-                    <span class="form_error"><?=$errors['file']?></span>
+                    <span class="form__error"><?=$errors['file']?></span>
                 </div>
             </div>
             <div class="form__container-three">
-<!--                count($formData) == 0 ? ($classname = "") : ($classname = ($formData['category'] == 'Выберите категорию') ? "form__item--invalid" : "");-->
-
                 <?php count($formData) == 0 ? ($classname = "") :  ($classname = isset ($errors['lot-rate']) && ($formData['lot-rate']) == 0  ? "form__item--invalid" : "");
                 $value = isset($formData['lot-rate']) ? $formData['lot-rate'] : 0; ?>
                 <div class="form__item form__item--small <?=$classname?>">
