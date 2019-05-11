@@ -112,7 +112,10 @@
                 </div>
             </div>
             <div class="form__container-three">
-                <?php count($formData) == 0 ? ($classname = "") :  ($classname = isset ($errors['lot-rate']) && ($formData['lot-rate']) == 0  ? "form__item--invalid" : "");
+                <?php
+                $lotRate = $formData['lot-rate'];
+//                echo(gettype($lotRate));
+                count($formData) == 0 ? ($classname = "") :  ($classname = isset ($errors['lot-rate']) && ($formData['lot-rate']) == 0 ? "form__item--invalid" : "");
                 $value = isset($formData['lot-rate']) ? $formData['lot-rate'] : 0; ?>
                 <div class="form__item form__item--small <?=$classname?>">
                     <label for="lot-rate">Начальная цена <sup>*</sup></label>

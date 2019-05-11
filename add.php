@@ -28,37 +28,28 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
 // Если таковой найден, то мы можем получить имя загруженного файла.
 
         if (isset($_FILES['img_lot']['name'])){
-            echo('файл есть');
             $tmp_name = $_FILES['img_lot']['tmp_name'];
             $path = $_FILES['img_lot']['name'];
-//        var_dump('$path'.'  '.$path);
 
-//      С помощью стандартной функции finfo_ можно получить информацию о типе файле
-//        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-//        $file_type = finfo_file($finfo, $tmp_name);
+//      С помощью mime_content_type можно получить информацию о типе файле
             $file_type = $tmp_name != '' ? mime_content_type($tmp_name) : '';
             if ($file_type !=="image/jpg" and $file_type !== "image/jpeg" and $file_type !== "image/png"){
-                echo('не тот формат');
                 $errors['file'] = 'Неверный формат. Загрузите картинку в формате jpg, jpeg, png';
             }
             else{
-                echo('формат подходит');
 //          Если файл соответствует ожидаемому типу, то мы копируем его в директорию где лежат все картинки,
 //          а также добавляем путь к загруженной гифки в массив $formData
                 move_uploaded_file($tmp_name, 'uploads/'.$path);
                 $formData['path'] = $path;
             }
         }else{
-            echo('файла нет');
+//            echo('файла нет');
             $errors['file'] = 'Вы не загрузили файл';
         }
-
         $isDateValid = isValidDate($checkedDate);
-        var_dump($errors);
-        var_dump(count($errors));
 
         if (count($errors)){
-            echo('ошибка валидации');
+//            echo('ошибка валидации');
             $layout = include_template('layout_add.php', [
                 'formData' => $formData,
                 'categories_list' => $categories_list,
