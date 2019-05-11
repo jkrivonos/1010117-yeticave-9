@@ -38,18 +38,31 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
             }
             else{
 //          Если файл соответствует ожидаемому типу, то мы копируем его в директорию где лежат все картинки,
-//          а также добавляем путь к загруженной гифки в массив $formData
+//          а также добавляем путь к загруженной картинки в массив $formData
                 move_uploaded_file($tmp_name, 'uploads/'.$path);
                 $formData['path'] = $path;
+//                $lot = $_POST['lot'];
+//                var_dump($lot);
+                    $sql = 'INSERT INTO lot (creation_date, description, user_id, img_link, start_price, delta_bet, title) VALUES (NOW(), ? , 5, ?,?,?,?)';
+                    $stmt = db_get_prepare_stmt($con, $sql, [$formData['message'], $formData['path'], $formData['lot-rate'], $formData['lot-step'], $formData['lot-name']]);
+                    $result = mysqli_stmt_execute($stmt);
+                    var_dump($result);
+                    if ($result){
+                        echo('добавлено в БД');
+                    }else{
+                        echo('не добавлено!');
+                    }
             }
         }else{
-//            echo('файла нет');
+            echo('файла нет');
             $errors['file'] = 'Вы не загрузили файл';
         }
         $isDateValid = isValidDate($checkedDate);
 
         if (count($errors)){
-//            echo('ошибка валидации');
+//            var_dump($errors);
+
+            echo('ошибка валидации');
             $layout = include_template('layout_add.php', [
                 'formData' => $formData,
                 'categories_list' => $categories_list,
@@ -66,6 +79,13 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
                 'errors' => $errors,
                 'isDateValid' => $isDateValid
             ]);
+            var_dump('===>');
+            var_dump($_POST);
+//            $lot = $formData['img_lot'];
+//            var_dump($lot);
+//            $filename = uniqid().'.png';
+//            var_dump($filename);
+//            $lot['path'] = $filename;
         }
     }
     else{
