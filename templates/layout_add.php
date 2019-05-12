@@ -70,15 +70,14 @@
                 </div>
 
                 <?php
-                var_dump($formData);
                 count($formData) == 0 ? ($classname = "") : ($classname = ($formData['category'] == 'Выберите категорию') ? "form__item--invalid" : "");
                 $value = isset($formData['category']) ? $formData['category'] : ""; ?>
                 <div class="form__item <?=$classname?>">
                     <label for="category">Категория <sup>*</sup></label>
                     <select id="category" name="category">
-                        <option selected value="<?=$value;?>"> <?=isset($value) ? $value : 'Выберите категорию'?></option>
+                        <option disabled>Выберите категорию</option>
                         <?php foreach ($categories_list as $key => $item):?>
-                            <option>
+                            <option <?= $formData['category'] == $item['name'] ? 'selected' : '' ?>>
                                 <a class="promo__link" href="pages/all-lots.html">
                                     <?=$item['name'];?>
                                 </a>
