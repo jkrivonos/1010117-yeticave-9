@@ -29,9 +29,16 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
 
         if (isset($_FILES['img_lot']['name'])){
             $tmp_name = $_FILES['img_lot']['tmp_name'];
+            var_dump($tmp_name);
             $path = $_FILES['img_lot']['name'];
+            var_dump($path);
 
-//      С помощью mime_content_type можно получить информацию о типе файле
+//      С помощью mime_content_type можно получить информацию о типе файле; определяем его расширение
+            $file_name = $_FILES['img_lot']['name'];
+            $file_extantion = substr($file_name, strrpos($file_name, '.')+1);
+            var_dump($file_extantion);
+
+
             $file_type = $tmp_name != '' ? mime_content_type($tmp_name) : '';
             if ($file_type !=="image/jpg" and $file_type !== "image/jpeg" and $file_type !== "image/png"){
                 $errors['file'] = 'Неверный формат. Загрузите картинку в формате jpg, jpeg, png';
@@ -39,13 +46,15 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
             else{
 //          Если файл соответствует ожидаемому типу, то мы копируем его в директорию где лежат все картинки,
 //          а также добавляем путь к загруженной картинки в массив $formData
+                $filename = uniqid() . "." . "$file_extantion";
+                var_dump($filename);
+                var_dump($tmp_name);
+
                 move_uploaded_file($tmp_name, 'uploads/'.$path);
-                $formData['path'] = $path;
-//                $lot = $_POST['lot'];
-//                var_dump($formData);
-                    $userIDRandom = '5';
+                $formData['path'] = $filename;
+                var_dump($formData['path']);
+                $userIDRandom = '5';
                 $categoryNameDB = $formData['category'];
-                echo($categoryNameDB);
                 $sqlIDCategory = 'SELECT id FROM category WHERE name = "'.$categoryNameDB.'"';
 //                $sqlIDCategory = 'SELECT id FROM category WHERE name = "Медикаменты"';
                 $resultIDCategory = mysqli_query($con, $sqlIDCategory);
@@ -55,21 +64,19 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
                     die();
                 }
                 else{
-                    var_dump($resultIDCategory);
-                    $idCategory = mysqli_fetch_all($resultIDCategory, MYSQLI_ASSOC);
-                    var_dump($idCategory);
+                    $idCategory = mysqli_fetch_assoc($resultIDCategory);
                 }
-                    $sql = 'INSERT INTO lot (description, title, creation_date, start_price, expiration_date, delta_bet, img_link, user_id) VALUES (?, ?, NOW(), ?, ?, ?, ?, 1)';
+                    $sql = 'INSERT INTO lot (description, title, creation_date, start_price, expiration_date, delta_bet, img_link, user_id, category_id) VALUES (?, ?, NOW(), ?, ?, ?, ?, 1, ?)';
                     $stmt = db_get_prepare_stmt($con, $sql, [
                         $formData['message'],
                         $formData['lot-name'],
                         $formData['lot-rate'],
                         $formData['lot-date'],
                         $formData['lot-step'],
-                        $formData['path']
+                        $formData['path'],
+                        $idCategory['id']
                 ]);
                     $result = mysqli_stmt_execute($stmt);
-//                    var_dump($result);
                     if ($result){
                         echo('добавлено в БД');
                     }else{
@@ -83,8 +90,6 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
         $isDateValid = isValidDate($checkedDate);
 
         if (count($errors)){
-//            var_dump($errors);
-
             echo('ошибка валидации');
             $layout = include_template('layout_add.php', [
                 'formData' => $formData,
@@ -95,7 +100,7 @@ $con = mysqli_connect("localhost", "root", "", "yeticave");
         }
         else {
             echo('готов записать в бд');
-//        $layout = include_template('view.php', ['categories_list' => $categories_list]);
+//        $layout = include_template('lot.php', ['categories_list' => $categories_list]);
             $layout = include_template('layout_add.php', [
                 'formData' => $formData,
                 'categories_list' => $categories_list,
