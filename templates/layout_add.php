@@ -70,17 +70,17 @@
                 </div>
 
                 <?php
+                var_dump($formData);
                 count($formData) == 0 ? ($classname = "") : ($classname = ($formData['category'] == 'Выберите категорию') ? "form__item--invalid" : "");
                 $value = isset($formData['category']) ? $formData['category'] : ""; ?>
                 <div class="form__item <?=$classname?>">
                     <label for="category">Категория <sup>*</sup></label>
                     <select id="category" name="category">
-<!--                        TODO: непонятно, куда нужно вписать value="--><?//=$value;?><!--", чтобы select не сбрасывал значение выбранного селекта при перезагрузке страницы.-->
-                        <option>Выберите категорию</option>
+                        <option selected value="<?=$value;?>"> <?=isset($value) ? $value : 'Выберите категорию'?></option>
                         <?php foreach ($categories_list as $key => $item):?>
                             <option>
                                 <a class="promo__link" href="pages/all-lots.html">
-                                    <?php echo $item['name'];?>
+                                    <?=$item['name'];?>
                                 </a>
                             </option>
                         <?php endforeach; ?>
