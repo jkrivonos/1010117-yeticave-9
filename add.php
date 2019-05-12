@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
 //          Если файл соответствует ожидаемому типу, то мы копируем его в директорию где лежат все картинки,
 //          а также добавляем путь к загруженной картинки в массив $formData
-            $filename = uniqid() . "." . "$file_extantion";
+            $filename = 'img/' . uniqid() . "." . "$file_extantion";
 //            var_dump($filename);
 //            var_dump($tmp_name);
 
