@@ -72,7 +72,7 @@
                     <select id="category" name="category">
                         <option>Выберите категорию</option>
                         <?php foreach ($categories_list as $key => $item): ?>
-                            <option <?= $formData['category'] == $item['name'] ? 'selected' : '' ?>>
+                            <option <?= isset($formData['category']) && $formData['category'] == $item['name'] ? 'selected' : '' ?>>
                                 <a class="promo__link" href="pages/all-lots.html">
                                     <?= $item['name']; ?>
                                 </a>
