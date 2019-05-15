@@ -12,9 +12,8 @@ if (!$result) {
 }
 $categories_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $formData = $_POST;
-    $required_fields = ['lot-name', 'category', 'message', 'lot-rate', 'lot-step', 'lot-date'];
+    $required_fields = ['lot-name', 'message', 'lot-date'];
     $errors = [];
 
     foreach ($required_fields as $field) {
@@ -22,6 +21,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors[$field] = "Поле необходимо заполнить";
         };
     };
+
+    if(empty($formData['category']) || $formData['category'] === "Выберите категорию") {
+        $errors['category'] = "Необходимо выбрать категорию";
+    }
+
+    if(empty($formData['lot-rate'])) {
+        $errors['lot-rate'] = "Поле необходимо заполнить";
+    } else if (!is_numeric($formData['lot-rate'])) {
+        $errors['lot-rate'] = "Некорректное значение";
+    } else if ($formData['lot-rate'] < 0) {
+        $errors['lot-rate'] = "Укажите положительное число";
+    }
+
+    if(empty($formData['lot-step'])) {
+        $errors['lot-step'] = "Поле необходимо заполнить";
+    } else if (!ctype_digit($formData['lot-step'])) {
+        $errors['lot-step'] = "Некорректное значение";
+    }
+
+
     $checkedDate = count($formData) == 0 ? '' : $formData['lot-date'];
 //Проверим, был ли загружен файл.
 // Поле для загрузки файла в форме называется 'img_lot', поэтому нам следует искать в массиве $_FILES одноименный ключ.
@@ -29,29 +48,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_FILES['img_lot']['name'])) {
         $tmp_name = $_FILES['img_lot']['tmp_name'];
-//        var_dump($tmp_name);
-        $path = $_FILES['img_lot']['name'];
-//        var_dump($path);
-
 //      С помощью mime_content_type можно получить информацию о типе файле; определяем его расширение
         $file_name = $_FILES['img_lot']['name'];
         $file_extantion = substr($file_name, strrpos($file_name, '.') + 1);
-//        var_dump($file_extantion);
-
-
         $file_type = $tmp_name != '' ? mime_content_type($tmp_name) : '';
         if ($file_type !== "image/jpg" and $file_type !== "image/jpeg" and $file_type !== "image/png") {
             $errors['file'] = 'Неверный формат. Загрузите картинку в формате jpg, jpeg, png';
         } else {
 //          Если файл соответствует ожидаемому типу, то мы копируем его в директорию где лежат все картинки,
 //          а также добавляем путь к загруженной картинки в массив $formData
-            $filename = 'img/' . uniqid() . "." . "$file_extantion";
-//            var_dump($filename);
-//            var_dump($tmp_name);
-
-            move_uploaded_file($tmp_name, 'uploads/' . $path);
-            $formData['path'] = $filename;
-//            var_dump($formData['path']);
+            $filename =  uniqid() . "." . "$file_extantion";
+            $path = 'img/' . $filename;
+            move_uploaded_file($tmp_name, 'img/' . $filename);
             $userIDRandom = '5';
             $categoryNameDB = $formData['category'];
             $sqlIDCategory = 'SELECT id FROM category WHERE name = "' . $categoryNameDB . '"';
@@ -70,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $formData['lot-rate'],
                 $formData['lot-date'],
                 $formData['lot-step'],
-                $formData['path'],
+                $path,
                 $idCategory['id']
             ]);
             $result = mysqli_stmt_execute($stmt);
@@ -85,6 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['file'] = 'Вы не загрузили файл';
     }
     $isDateValid = isValidDate($checkedDate);
+$isDateValid = is_date_valid($checkedDate);
+
 
     if (count($errors)) {
         echo('ошибка валидации');
@@ -102,9 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'isDateValid' => $isDateValid
         ]);
     }
-} else {
-    $layout = include_template('layout_add.php', []);
-}
 
 print($layout);
 ?>
