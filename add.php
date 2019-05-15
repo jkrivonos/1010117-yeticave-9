@@ -1,8 +1,10 @@
 <?php
+require 'connection.php';
 require_once 'helpers.php';
 require_once 'functions.php';
 
-$con = mysqli_connect("localhost", "root", "", "yeticave");
+connectionToBD();
+
 $sql = "SELECT name FROM category;";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -58,8 +60,8 @@ $categories_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
 //          Если файл соответствует ожидаемому типу, то мы копируем его в директорию где лежат все картинки,
 //          а также добавляем путь к загруженной картинки в массив $formData
             $filename =  uniqid() . "." . "$file_extantion";
-            $path = 'img/' . $filename;
-            move_uploaded_file($tmp_name, 'img/' . $filename);
+            $path = 'uploads/' . $filename;
+            move_uploaded_file($tmp_name, 'uploads/' . $filename);
             $userIDRandom = '5';
             $categoryNameDB = $formData['category'];
             $sqlIDCategory = 'SELECT id FROM category WHERE name = "' . $categoryNameDB . '"';
