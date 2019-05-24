@@ -5,6 +5,8 @@ require_once 'functions.php';
 
 connectionToBD();
 
+
+
 $sql = "SELECT name, id FROM category;";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -24,11 +26,11 @@ if (!empty($formData)) {
         };
     };
 
-    if(empty($formData['category']) || $formData['category'] === "Выберите категорию") {
+    if (empty($formData['category']) || $formData['category'] === "Выберите категорию") {
         $errors['category'] = "Необходимо выбрать категорию";
     }
 
-    if(empty($formData['lot-rate'])) {
+    if (empty($formData['lot-rate'])) {
         $errors['lot-rate'] = "Поле необходимо заполнить";
     } else if (!is_numeric($formData['lot-rate'])) {
         $errors['lot-rate'] = "Некорректное значение";
@@ -37,19 +39,19 @@ if (!empty($formData)) {
     } else if ($formData['lot-rate'] == 0) {
         $errors['lot-rate'] = "Укажите число больше 0";
     }
-    if(empty($formData['lot-step'])) {
+    if (empty($formData['lot-step'])) {
         $errors['lot-step'] = "Поле необходимо заполнить";
     } else if (!ctype_digit($formData['lot-step'])) {
         $errors['lot-step'] = "Некорректное значение";
     }
 
-    if(empty($formData['lot-step'])) {
+    if (empty($formData['lot-step'])) {
         $errors['lot-step'] = "Поле необходимо заполнить";
     } else if (!ctype_digit($formData['lot-step'])) {
         $errors['lot-step'] = "Некорректное значение";
     }
 
-    if(empty($formData['lot-date'])) {
+    if (empty($formData['lot-date'])) {
         $errors['lot-date'] = "Поле необходимо заполнить";
     } else if (!is_date_valid($formData['lot-date'])) {
         $errors['lot-date'] = "Некорректный формат даты";
@@ -72,7 +74,7 @@ if (!empty($formData)) {
         $tmp_name = $_FILES['img_lot']['tmp_name'];
         $file_name = $_FILES['img_lot']['name'];
         $file_extantion = substr($file_name, strrpos($file_name, '.') + 1);
-        $filename =  uniqid() . "." . $file_extantion;
+        $filename = uniqid() . "." . $file_extantion;
         $path = 'uploads/' . $filename;
         move_uploaded_file($tmp_name, 'uploads/' . $filename);
         $sql = 'INSERT INTO lot (description, title, creation_date, start_price, expiration_date, delta_bet, img_link, user_id, category_id) VALUES (?, ?, NOW(), ?, ?, ?, ?, 1, ?)';
@@ -87,7 +89,7 @@ if (!empty($formData)) {
         ]);
         $result = mysqli_stmt_execute($stmt);
         if ($result) {
-            $lot_id = mysqli_insert_id($con);
+            $lot_id = intval(mysqli_insert_id($con));
             header("Location: lot.php?id=" . $lot_id);
         } else {
             http_response_code(500);
@@ -97,9 +99,9 @@ if (!empty($formData)) {
 }
 
 $layout = include_template('layout_add.php', [
-        'formData' => $formData,
-        'categories_list' => $categories_list,
-        'errors' => $errors,
+    'formData' => $formData,
+    'categories_list' => $categories_list,
+    'errors' => $errors,
 ]);
 
 print($layout);
