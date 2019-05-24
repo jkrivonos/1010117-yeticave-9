@@ -59,10 +59,11 @@ $categories_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
         } else {
 //          Если файл соответствует ожидаемому типу, то мы копируем его в директорию где лежат все картинки,
 //          а также добавляем путь к загруженной картинки в массив $formData
-            $filename =  uniqid() . "." . "$file_extantion";
+            $filename =  uniqid() . "." . $file_extantion;
             $path = 'uploads/' . $filename;
             move_uploaded_file($tmp_name, 'uploads/' . $filename);
             $userIDRandom = '5';
+            var_dump($formData);
             $categoryNameDB = $formData['category'];
             $sqlIDCategory = 'SELECT id FROM category WHERE name = "' . $categoryNameDB . '"';
             $resultIDCategory = mysqli_query($con, $sqlIDCategory);
