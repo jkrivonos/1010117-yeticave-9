@@ -3,9 +3,7 @@ require 'connection.php';
 require_once 'helpers.php';
 require_once 'functions.php';
 
-connectionToBD();
-
-
+$con = connectionToBD();
 
 $sql = "SELECT name, id FROM category;";
 $result = mysqli_query($con, $sql);
@@ -34,28 +32,26 @@ if (!empty($formData)) {
         $errors['lot-rate'] = "Поле необходимо заполнить";
     } else if (!is_numeric($formData['lot-rate'])) {
         $errors['lot-rate'] = "Некорректное значение";
-    } else if ($formData['lot-rate'] < 0) {
-        $errors['lot-rate'] = "Укажите положительное число";
-    } else if ($formData['lot-rate'] == 0) {
+    } else if ($formData['lot-rate'] <= 0) {
         $errors['lot-rate'] = "Укажите число больше 0";
     }
-    if (empty($formData['lot-step'])) {
+
+    if ($formData['lot-step'] == 0) {
+        $errors['lot-step'] = "Укажите число больше 0";
+    } else if (empty($formData['lot-step'])) {
         $errors['lot-step'] = "Поле необходимо заполнить";
     } else if (!ctype_digit($formData['lot-step'])) {
         $errors['lot-step'] = "Некорректное значение";
     }
 
-    if (empty($formData['lot-step'])) {
-        $errors['lot-step'] = "Поле необходимо заполнить";
-    } else if (!ctype_digit($formData['lot-step'])) {
-        $errors['lot-step'] = "Некорректное значение";
-    }
-
+    $tomorrowDate = new DateTime('tomorrow');
     if (empty($formData['lot-date'])) {
         $errors['lot-date'] = "Поле необходимо заполнить";
     } else if (!is_date_valid($formData['lot-date'])) {
         $errors['lot-date'] = "Некорректный формат даты";
-    }
+    } else if ($formData['lot-date'] < $tomorrowDate->format('Y-m-d') ){
+        $errors['lot-date'] = 'Дата окончания должна превышать текущую дату';
+    };
 
     if (empty($_FILES['img_lot']['name'])) {
         $errors['file'] = 'Вы не загрузили файл';

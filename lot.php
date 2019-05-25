@@ -6,7 +6,7 @@ require 'functions.php';
 $is_auth = rand(0, 1);
 $user_name = 'Юлия';
 
-connectionToBD();
+$con = connectionToBD();
 
 $sql = "SELECT name, code FROM category";
 $result = mysqli_query($con, $sql);
