@@ -15,8 +15,6 @@ if (!$result) {
     print("ошибка MySQL:" . $error);
     die();
 }
-$row_cnt = mysqli_num_rows($result);
-if($row_cnt > 0){
     $categories_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $formData = $_POST;
     $errors = [];
@@ -30,6 +28,15 @@ if($row_cnt > 0){
 
         if (empty($formData['category']) || $formData['category'] === "Выберите категорию") {
             $errors['category'] = "Необходимо выбрать категорию";
+        } else {
+            $tempCatId = intval($formData['category']);
+            $sqlCategory = "SELECT name FROM category where id = $tempCatId;";
+            $resultCatName = mysqli_query($con, $sqlCategory);
+            $catName = mysqli_fetch_all($resultCatName, MYSQLI_ASSOC);
+            if (!$catName) {
+                $error = mysqli_error($con);
+                $errors['category'] = "Указана неверная категория";
+            }
         }
 
         if (empty($formData['lot-rate'])) {
@@ -40,9 +47,7 @@ if($row_cnt > 0){
             $errors['lot-rate'] = "Укажите число больше 0";
         }
 
-        if ($formData['lot-step'] == 0) {
-            $errors['lot-step'] = "Укажите число больше 0";
-        } else if (empty($formData['lot-step'])) {
+        if (empty($formData['lot-step'])) {
             $errors['lot-step'] = "Поле необходимо заполнить";
         } else if (!ctype_digit($formData['lot-step'])) {
             $errors['lot-step'] = "Некорректное значение";
@@ -110,6 +115,5 @@ if($row_cnt > 0){
         'categories' => $categories_list
     ]);
     print($layout);
-}
 ?>
 
