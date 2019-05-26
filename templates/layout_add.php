@@ -94,15 +94,11 @@
                         placeholder="Напишите описание лота"><?=  isset($formData['message']) ? htmlspecialchars($formData['message']) : "" ?></textarea>
                 <span class="form__error"><?=  isset($errors['message']) ? $errors['message'] : "" ?></span>
             </div>
-
-<?php var_dump($formData);
-var_dump($_FILES['img_lot']);?>
-            <?php $classname = isset ($errors['file']) ? "form__item--invalid" : "";
-//            $value = isset($formData['img_lot']) ? $formData['img_lot'] : ''; ?>
+            <?php $classname = isset ($errors['file']) ? "form__item--invalid" : ""; ?>
             <div class="form__item form__item--file <?= $classname ?>">
                 <label>Изображение <sup>*</sup></label>
                 <div class="form__input-file">
-                    <input class="visually-hidden" name="img_lot" type="file" id="lot-img" value="<?= isset($_FILES['img_lot']['name']) ? $_FILES['img_lot']['name'] : ''; ?>">
+                    <input  name="img_lot" type="file" id="lot-img" value=" ">
                     <label for="lot-img">
                         Добавить
                     </label>

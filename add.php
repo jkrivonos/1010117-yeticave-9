@@ -97,7 +97,7 @@ if (!empty($formData)) {
 $layout = include_template('layout_add.php', [
     'formData' => $formData,
     'categories_list' => $categories_list,
-    'errors' => $errors,
+    'errors' => $errors
 ]);
 
 print($layout);
