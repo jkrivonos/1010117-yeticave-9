@@ -49,14 +49,11 @@
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <?php foreach ($categories
-
-            as $cat): ?>
+            <?php foreach ($categories as $cat): ?>
             <li class="nav__item">
                 <a href="pages/all-lots.html">
                     <?php echo $cat['name']; ?>
                 </a>
-
                 <?php endforeach; ?>
             </li>
         </ul>

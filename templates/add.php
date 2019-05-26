@@ -75,7 +75,6 @@
                     <span class="form__error"><?= isset($errors['lot-date']) ? $errors['lot-date'] : "" ?></span>
                 </div>
             </div>
-            <button type="submit" name="send" class="button">Добавить лот</button>
         </form>
 <script src="../flatpickr.js"></script>
 <script src="../script.js"></script>
