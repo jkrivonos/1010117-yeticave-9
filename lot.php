@@ -8,6 +8,7 @@ $user_name = 'Юлия';
 
 $con = connectionToBD();
 
+
 $sql = "SELECT name, code FROM category";
 $result = mysqli_query($con, $sql);
 if (!$result){
