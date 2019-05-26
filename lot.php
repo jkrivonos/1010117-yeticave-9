@@ -59,7 +59,6 @@ if (isset($_GET['id'])){
             'categories' => $categories
         ]);
         print($layout);
-//        print($layout_lot);
     }else{
         $error = mysqli_error($con);
         http_response_code(404);
