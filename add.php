@@ -110,22 +110,6 @@ if($row_cnt > 0){
         'categories' => $categories_list
     ]);
     print($layout);
-
-
 }
-
-
-//$layout = include_template('add.php', [
-//    'formData' => $formData,
-//    'categories_list' => $categories_list,
-//    'errors' => $errors
-//]);
-
-
-
-
-
-
-print($layout);
 ?>
 
