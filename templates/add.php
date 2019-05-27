@@ -7,7 +7,7 @@
         <div class="form__item <?= isset($errors['lot-name']) ? "form__item--invalid" : "" ?>">
             <label for="lot-name">Наименование <sup>*</sup></label>
             <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота"
-                   value="<?= isset($formData['lot-name']) ? $formData['lot-name'] : "" ?>">
+                   value="<?= isset($formData['lot-name']) ? htmlspecialchars($formData['lot-name']) : "" ?>">
             <span class="form__error"><?= isset($errors['lot-name']) ? $errors['lot-name'] : "" ?></span>
         </div>
 
@@ -16,7 +16,7 @@
             <select id="category" name="category">
                 <option>Выберите категорию</option>
                 <?php foreach ($categories_list as $key => $item): ?>
-                    <option value="<?php echo intval($item['id']); ?>" <?= isset($formData['category']) && $formData['category'] == intval($item['id']) ? 'selected' : "" ?>>
+                    <option value="<?php echo intval($item['id']); ?>" <?= isset($formData['category']) && htmlspecialchars($formData['category']) == intval($item['id']) ? 'selected' : "" ?>>
                         <a class="promo__link" href="pages/all-lots.html">
                             <?php echo $item['name']; ?>
                         </a>
@@ -31,7 +31,7 @@
         <textarea
                 id="message"
                 name="message"
-                placeholder="Напишите описание лота"><?= isset($formData['message']) ? $formData['message'] : "" ?></textarea>
+                placeholder="Напишите описание лота"><?= isset($formData['message']) ? htmlspecialchars($formData['message']) : "" ?></textarea>
         <span class="form__error"><?= isset($errors['message']) ? $errors['message'] : "" ?></span>
     </div>
 
@@ -50,13 +50,13 @@
         <div class="form__item form__item--small <?= isset($errors['lot-rate']) ? "form__item--invalid" : "" ?>">
             <label for="lot-rate">Начальная цена <sup>*</sup></label>
             <input id="lot-rate" type="text" name="lot-rate" placeholder="0"
-                   value="<?= isset($formData['lot-rate']) ? $formData['lot-rate'] : "" ?>">
+                   value="<?= isset($formData['lot-rate']) ? intval($formData['lot-rate']) : "" ?>">
             <span class="form__error"><?= isset($errors['lot-rate']) ? $errors['lot-rate'] : "" ?></span>
         </div>
         <div class="form__item form__item--small <?= isset($errors['lot-step']) ? "form__item--invalid" : "" ?>">
             <label for="lot-step">Шаг ставки <sup>*</sup></label>
             <input id="lot-step" type="text" name="lot-step" placeholder="0"
-                   value="<?= isset($formData['lot-step']) ? $formData['lot-step'] : "" ?>">
+                   value="<?= isset($formData['lot-step']) ? intval($formData['lot-step']) : "" ?>">
             <span class="form__error"><?= isset($errors['lot-step']) ? $errors['lot-step'] : "" ?></span>
         </div>
         <div class="form__item <?= isset($errors['lot-date']) ? "form__item--invalid" : "" ?>">
