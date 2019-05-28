@@ -6,7 +6,8 @@ require 'functions.php';
 $is_auth = rand(0, 1);
 $user_name = 'Юлия';
 
-connectionToBD();
+$con = connectionToBD();
+
 
 $sql = "SELECT name, code FROM category";
 $result = mysqli_query($con, $sql);
@@ -58,7 +59,6 @@ if (isset($_GET['id'])){
             'categories' => $categories
         ]);
         print($layout);
-//        print($layout_lot);
     }else{
         $error = mysqli_error($con);
         http_response_code(404);

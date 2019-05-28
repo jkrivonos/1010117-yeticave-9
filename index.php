@@ -4,7 +4,7 @@ require 'connection.php';
 require 'functions.php';
 require 'helpers.php';
 
-    connectionToBD();
+    $con = connectionToBD();
 
     $sql = "SELECT name, code FROM category";
     $result = mysqli_query($con, $sql);
