@@ -13,9 +13,12 @@ function formatPrice($temp)
 
 function formatTime()
 {
-    date_default_timezone_set("Europe/Moscow");
-    setlocale(LC_ALL, 'ru_RU');
-
+    if (setlocale(LC_ALL, "0") != "ru_RU") {
+        setlocale(LC_ALL, "ru_RU");
+    }
+    if (date_default_timezone_get() != "Europe/Moscow") {
+        date_default_timezone_set("Europe/Moscow");
+    }
     $interval = (new DateTime("now"))->diff(new DateTime("tomorrow midnight"));
     if ($interval->format('%h') < 1) {
         echo "<div class='timer--finishing timer'>" . $interval->format('%h : %i') . "</div>";

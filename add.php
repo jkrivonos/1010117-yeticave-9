@@ -96,6 +96,7 @@ if (!empty($formData)) {
         if ($result) {
             $lot_id = intval(mysqli_insert_id($con));
             header("Location: lot.php?id=" . $lot_id);
+            die();
         } else {
             http_response_code(500);
             echo('Непредвиденная ошибка');
