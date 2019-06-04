@@ -20,28 +20,30 @@ $categories_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 $errors = [];
 
-if(!empty($_POST)){
-    if(empty($_POST['email'])){
+if (!empty($_POST)) {
+    if (empty($_POST['email'])) {
         $errors['email'] = "Введите e-mail";
+    } else if (!filter_var(($_POST['email']), FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = "email невалидный";
     }
-    if(empty($_POST['password'])){
+    if (empty($_POST['password'])) {
         $errors['password'] = "Введите пароль";
     }
-    if(empty($_POST['name'])){
+    if (empty($_POST['name'])) {
         $errors['name'] = "Введите имя";
-    }if(empty($_POST['message'])){
+    }
+    if (empty($_POST['message'])) {
         $errors['message'] = "Напишите как с вами связаться";
     }
 
-    if (empty($errors)){
+    if (empty($errors)) {
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $sql = "SELECT id FROM user WHERE email = '$email'";
 
         $res = mysqli_query($con, $sql);
         if (mysqli_num_rows($res) > 0) {
             $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
-        }
-        else {
+        } else {
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
             $sql = 'INSERT INTO user (registration_date, email, name, password) VALUES (NOW(), ?, ?, ?)';
@@ -51,7 +53,7 @@ if(!empty($_POST)){
         if ($res && empty($errors)) {
             header("Location: /login.php");
             exit();
-        }else{
+        } else {
             http_response_code(500);
             echo('Непредвиденная ошибка');
         }
@@ -65,7 +67,7 @@ if(!empty($_POST)){
     ]);
 
     $layout = include_template('layout.php', [
-        'content'    => $content,
+        'content' => $content,
         'categories' => $categories_list,
         'title' => 'Регистрация',
         'user_name' => $user_name,

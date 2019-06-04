@@ -3,7 +3,8 @@
 <h2>Регистрация нового аккаунта</h2>
 <div class="form__item <?= isset($errors['email']) ? "form__item--invalid" : "" ?>">
     <label for="email">E-mail <sup>*</sup></label>
-    <input id="email" type="text" name="email" placeholder="Введите e-mail">
+    <input id="email" type="text" name="email" placeholder="Введите e-mail"
+           value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : "" ?>">
     <span class="form__error"><?= isset($errors['email']) ? $errors['email'] : "" ?></span>
 </div>
 <div class="form__item <?= isset($errors['password']) ? "form__item--invalid" : "" ?>">
@@ -23,7 +24,7 @@
             id="message"
             name="message"
             placeholder="Напишите как с вами связаться"><?= isset($_POST['message']) ? htmlspecialchars($_POST['message']) : "" ?></textarea>
-    <span class="form__error"><?= isset($errors['message']) ? $errors['message'] : "" ?></span>
+    <span class="form__error"><?= isset( $errors['message']) ? $errors['message'] : "" ?></span>
 </div>
 <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
 <button type="submit" class="button">Зарегистрироваться</button>
