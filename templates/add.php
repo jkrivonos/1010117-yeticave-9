@@ -31,7 +31,8 @@
         <textarea
                 id="message"
                 name="message"
-                placeholder="Напишите описание лота"><?= isset($formData['message']) ? htmlspecialchars($formData['message']) : "" ?></textarea>
+                placeholder="Напишите описание лота">
+            <?= isset($formData['message']) ? htmlspecialchars($formData['message']) : "" ?></textarea>
         <span class="form__error"><?= isset($errors['message']) ? $errors['message'] : "" ?></span>
     </div>
 
