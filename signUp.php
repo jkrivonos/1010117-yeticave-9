@@ -35,7 +35,6 @@ if (!empty($_POST)) {
     if (empty($_POST['message'])) {
         $errors['message'] = "Напишите как с вами связаться";
     }
-
     if (empty($errors)) {
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $sql = "SELECT id FROM user WHERE email = '$email'";
@@ -60,21 +59,20 @@ if (!empty($_POST)) {
 
 
     }
+}
+$content = include_template('signUp.php', [
+    'errors' => $errors,
+    'categories_list' => $categories_list
+]);
 
-    $content = include_template('signUp.php', [
-        'errors' => $errors,
-        'categories_list' => $categories_list
-    ]);
+$layout = include_template('layout.php', [
+    'content' => $content,
+    'categories' => $categories_list,
+    'title' => 'Регистрация',
+    'user_name' => $user_name,
+    'is_auth' => $is_auth,
+]);
+print($layout);
 
-    $layout = include_template('layout.php', [
-        'content' => $content,
-        'categories' => $categories_list,
-        'title' => 'Регистрация',
-        'user_name' => $user_name,
-        'is_auth' => $is_auth,
-    ]);
-
-    print($layout);
-};
 ?>
 
