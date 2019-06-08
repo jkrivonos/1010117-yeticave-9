@@ -4,8 +4,6 @@ require_once 'helpers.php';
 require_once 'functions.php';
 
 
-$is_auth = rand(0, 1);
-$user_name = 'Юлия';
 
 $con = connectionToBD();
 
@@ -35,7 +33,6 @@ if (!empty($_POST)) {
     if (empty($_POST['message'])) {
         $errors['message'] = "Напишите как с вами связаться";
     }
-
     if (empty($errors)) {
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $sql = "SELECT id FROM user WHERE email = '$email'";
@@ -60,21 +57,21 @@ if (!empty($_POST)) {
 
 
     }
+}
+//$name = isset($_POST['name']) ? $_POST['name'] : "";
 
-    $content = include_template('signUp.php', [
-        'errors' => $errors,
-        'categories_list' => $categories_list
-    ]);
+$content = include_template('signUp.php', [
+    'errors' => $errors,
+    'categories_list' => $categories_list
+]);
 
-    $layout = include_template('layout.php', [
-        'content' => $content,
-        'categories' => $categories_list,
-        'title' => 'Регистрация',
-        'user_name' => $user_name,
-        'is_auth' => $is_auth,
-    ]);
+$layout = include_template('layout.php', [
+    'content' => $content,
+    'categories' => $categories_list,
+    'title' => 'Регистрация',
+    'user_name' => ''
+]);
+print($layout);
 
-    print($layout);
-};
 ?>
 

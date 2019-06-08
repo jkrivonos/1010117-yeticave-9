@@ -3,11 +3,16 @@ require 'connection.php';
 require_once 'helpers.php';
 require_once 'functions.php';
 
-$is_auth = rand(0, 1);
-$user_name = 'Юлия';
 
 $con = connectionToBD();
+session_start();
 
+if (!isset($_SESSION['user'])) {
+    header("Location: /");
+    http_response_code(403);
+    echo('Авторизуйтесь, чтобы добавить лот');
+    exit();
+}
 $sql = "SELECT name, id FROM category;";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -103,6 +108,8 @@ if (!empty($formData)) {
         }
     };
 }
+$user_name = isset($_SESSION['user']) ? $_SESSION['user']['name'] : '';
+
 $content = include_template('add.php', [
     'formData' => $formData,
     'errors' => $errors,
@@ -112,7 +119,6 @@ $layout = include_template('layout.php', [
     'content' => $content,
     'title' => 'Добавить лот',
     'user_name' => $user_name,
-    'is_auth' => $is_auth,
     'categories' => $categories_list
 ]);
 print($layout);
