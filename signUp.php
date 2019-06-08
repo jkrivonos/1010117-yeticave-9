@@ -4,8 +4,6 @@ require_once 'helpers.php';
 require_once 'functions.php';
 
 
-$is_auth = rand(0, 1);
-$user_name = 'Юлия';
 
 $con = connectionToBD();
 
@@ -60,6 +58,8 @@ if (!empty($_POST)) {
 
     }
 }
+//$name = isset($_POST['name']) ? $_POST['name'] : "";
+
 $content = include_template('signUp.php', [
     'errors' => $errors,
     'categories_list' => $categories_list
@@ -69,8 +69,7 @@ $layout = include_template('layout.php', [
     'content' => $content,
     'categories' => $categories_list,
     'title' => 'Регистрация',
-    'user_name' => $user_name,
-    'is_auth' => $is_auth,
+    'user_name' => ''
 ]);
 print($layout);
 

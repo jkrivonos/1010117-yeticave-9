@@ -4,11 +4,14 @@ require 'connection.php';
 require 'functions.php';
 require 'helpers.php';
 
-    $con = connectionToBD();
+$con = connectionToBD();
+session_start();
+
+
 
     $sql = "SELECT name, code FROM category";
     $result = mysqli_query($con, $sql);
-    if (!$result){
+    if (!$result) {
         $error = mysqli_error($con);
         print("ошибка MySQL:" . $error);
         die();
@@ -31,7 +34,7 @@ require 'helpers.php';
         ORDER BY lot.creation_date DESC;
 ";
     $resultLots = mysqli_query($con, $sqlLots);
-    if (!$resultLots){
+    if (!$resultLots) {
         $error = mysqli_error($con);
         print("ошибка MySQL:" . $error);
         die();
@@ -40,8 +43,7 @@ require 'helpers.php';
     $advertisements = mysqli_fetch_all($resultLots, MYSQLI_ASSOC);
 
 
-$is_auth = rand(0, 1);
-$user_name = 'Юлия';
+$user_name = isset($_SESSION) ? $_SESSION['username']['name'] : '';
 
 $content = include_template('index.php', [
     'advertisements' => $advertisements,
@@ -52,8 +54,7 @@ $layout = include_template('layout.php', [
     'content' => $content,
     'categories' => $categories,
     'title' => 'Главная',
-    'user_name' => $user_name,
-    'is_auth' => $is_auth
+    'user_name' => $user_name
 ]);
 
 

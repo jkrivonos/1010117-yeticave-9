@@ -21,7 +21,7 @@
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
             <nav class="user-menu">
-                <?php if ($is_auth === 1): ?>
+                <?php if (!empty($user_name)): ?>
                     <div class="user-menu__logged">
                         <p>
                             <?php echo($user_name) ?></p>

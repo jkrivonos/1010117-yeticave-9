@@ -3,11 +3,8 @@ require 'connection.php';
 require 'helpers.php';
 require 'functions.php';
 
-$is_auth = rand(0, 1);
-$user_name = 'Юлия';
-
 $con = connectionToBD();
-
+session_start();
 
 $sql = "SELECT name, code FROM category";
 $result = mysqli_query($con, $sql);
@@ -51,11 +48,11 @@ if (isset($_GET['id'])){
         $content = include_template('lot.php', [
             'current_lot' => $current_lot
         ]);
+        $user_name = isset($_SESSION) ? $_SESSION['username']['name'] : '';
         $layout= include_template('layout.php',[
             'content' => $content,
             'title' => 'Главная',
             'user_name' => $user_name,
-            'is_auth' => $is_auth,
             'categories' => $categories
         ]);
         print($layout);
