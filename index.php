@@ -43,7 +43,7 @@ session_start();
     $advertisements = mysqli_fetch_all($resultLots, MYSQLI_ASSOC);
 
 
-$user_name = isset($_SESSION) ? $_SESSION['username']['name'] : '';
+$user_name = isset($_SESSION['user']) ? $_SESSION['user']['name'] : '';
 
 $content = include_template('index.php', [
     'advertisements' => $advertisements,

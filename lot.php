@@ -48,7 +48,7 @@ if (isset($_GET['id'])){
         $content = include_template('lot.php', [
             'current_lot' => $current_lot
         ]);
-        $user_name = isset($_SESSION) ? $_SESSION['username']['name'] : '';
+        $user_name = isset($_SESSION['user']) ? $_SESSION['user']['name'] : '';
         $layout= include_template('layout.php',[
             'content' => $content,
             'title' => 'Главная',

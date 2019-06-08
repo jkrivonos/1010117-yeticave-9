@@ -7,7 +7,12 @@ require_once 'functions.php';
 $con = connectionToBD();
 session_start();
 
-
+if (!isset($_SESSION['user'])) {
+    header("Location: /");
+    http_response_code(403);
+    echo('Авторизуйтесь, чтобы добавить лот');
+    exit();
+}
 $sql = "SELECT name, id FROM category;";
 $result = mysqli_query($con, $sql);
 if (!$result) {
@@ -103,7 +108,7 @@ if (!empty($formData)) {
         }
     };
 }
-$user_name = isset($_SESSION) ? $_SESSION['username']['name'] : '';
+$user_name = isset($_SESSION['user']) ? $_SESSION['user']['name'] : '';
 
 $content = include_template('add.php', [
     'formData' => $formData,

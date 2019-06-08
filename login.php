@@ -38,7 +38,7 @@ if (!empty ($_POST['email'])){
     if (!count($errors) and $user) {
         if (password_verify($_POST['password'], $user['password'])) {
             session_start();
-            $_SESSION['username'] = $user;
+            $_SESSION['user'] = $user;
 //            var_dump($_SESSION);
             header("Location: /index.php");
             exit();
