@@ -5,7 +5,6 @@ require 'functions.php';
 
 $con = connectionToBD();
 session_start();
-var_dump($_POST);
 $sql = "SELECT name, code FROM category";
 $result = mysqli_query($con, $sql);
 if (!$result){
@@ -21,7 +20,33 @@ if (empty($_POST['cost'])) {
     $errors['cost'] = "Некорректное значение";
 } else if ($_POST['cost'] <= 0) {
     $errors['cost'] = "Укажите число больше 0";
+}else{
+    $sql = 'INSERT INTO bet (user_id, lot_id, creation_time, price) VALUES (?, ?, NOW(), ?)';
+    $stmt = db_get_prepare_stmt($con, $sql, [
+        intval($_SESSION['user']['id']),
+        intval($_GET['id']),
+        intval($_POST['cost']),
+
+    ]);
+    $result = mysqli_stmt_execute($stmt);
+
+    if ($result) {
+        echo $result;
+//    $lot_id = intval(mysqli_insert_id($con));
+//    header("Location: lot.php?id=" . $lot_id);
+//    die();
+    } else {
+        http_response_code(500);
+        echo('Непредвиденная ошибка');
+    }
 }
+
+
+
+
+
+
+
 //Минимальная ставка должна быть равна текущей цене плюс шаг торгов.
 if (isset($_GET['id'])){
     $id_lot = intval($_GET['id']);
