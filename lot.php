@@ -5,7 +5,7 @@ require 'functions.php';
 
 $con = connectionToBD();
 session_start();
-
+var_dump($_POST);
 $sql = "SELECT name, code FROM category";
 $result = mysqli_query($con, $sql);
 if (!$result){
@@ -14,7 +14,14 @@ if (!$result){
     die();
 }
 $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+$errors = [];
+if (empty($_POST['cost'])) {
+    $errors['cost'] = "Поле необходимо заполнить";
+} else if (!is_numeric($_POST['cost'])) {
+    $errors['cost'] = "Некорректное значение";
+} else if ($_POST['cost'] <= 0) {
+    $errors['cost'] = "Укажите число больше 0";
+}
 //Минимальная ставка должна быть равна текущей цене плюс шаг торгов.
 if (isset($_GET['id'])){
     $id_lot = intval($_GET['id']);
@@ -46,7 +53,8 @@ if (isset($_GET['id'])){
     if($row_cnt > 0){
         $current_lot = mysqli_fetch_assoc($result);
         $content = include_template('lot.php', [
-            'current_lot' => $current_lot
+            'current_lot' => $current_lot,
+            'errors' => $errors
         ]);
         $user_name = isset($_SESSION['user']) ? $_SESSION['user']['name'] : '';
         $layout= include_template('layout.php',[
